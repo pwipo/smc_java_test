@@ -73,6 +73,10 @@ public class Source implements ISourceManaged {
         this(executionContextTool, configurationName, executionContextName, null, null, null, null, sources, SourceType.MULTIPART, order);
     }
 
+    public Source(ExecutionContextToolImpl executionContextTool, String configurationName, String executionContextName, IValue valueSource, List<ISourceManaged> sources, Integer order, List<String> paths) {
+        this(executionContextTool, configurationName, executionContextName, null, null, valueSource , null, sources, SourceType.OBJECT_ARRAY, order);
+    }
+
     @Override
     public SourceType getType() {
         return type;
@@ -123,7 +127,9 @@ public class Source implements ISourceManaged {
             case CALLER:
                 return 0;
             case CALLER_RELATIVE_NAME:
-                return 0;
+                return 1;
+            case OBJECT_ARRAY:
+                return 1;
             default:
                 throw new IllegalArgumentException();
         }
@@ -145,22 +151,52 @@ public class Source implements ISourceManaged {
     }
 
     @Override
-    public ISourceFilter createFilter(List<Integer> range, int period, int countPeriods, int startOffset) {
+    public ISourceFilter createFilter(boolean forObject, List<Integer> range, int period, int countPeriods, int startOffset) {
         return null;
     }
 
     @Override
-    public ISourceFilter createFilter(double min, double max) {
+    public ISourceFilter createFilter(String fieldName, double min, double max) {
         return null;
     }
 
     @Override
-    public ISourceFilter createFilterStrEq(boolean needEquals, String value) {
+    public ISourceFilter createFilterStrEq(String fieldName, boolean needEquals, String value) {
         return null;
     }
 
     @Override
-    public ISourceFilter createFilterStrContain(boolean needContain, String value) {
+    public ISourceFilter createFilterStrContain(String fieldName, boolean needContain, String value) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter createFilterObjectPaths(List<String> paths) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter updateFilter(int id, boolean forObject, List<Integer> range, int period, int countPeriods, int startOffset) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter updateFilter(int id, String fieldName, double min, double max) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter updateFilterStrEq(int id, String fieldName, boolean needEquals, String value) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter updateFilterStrContain(int id, String fieldName, boolean needContain, String value) {
+        return null;
+    }
+
+    @Override
+    public ISourceFilter updateFilterObjectPaths(int id, List<String> paths) {
         return null;
     }
 

@@ -1,4 +1,4 @@
-module ru.smcsystem.smc.test {
+module ru.smcsystem.test {
     exports ru.smcsystem.test;
     exports ru.smcsystem.test.emulate;
     requires ru.smcsystem.api;

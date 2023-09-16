@@ -9,6 +9,8 @@ import ru.smcsystem.api.tools.execution.ConfigurationControlTool;
 import ru.smcsystem.api.tools.execution.ExecutionContextTool;
 import ru.smcsystem.api.tools.execution.FlowControlTool;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -81,30 +83,177 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         return result;
     }
 
-    @Override
-    public void addMessage(Object value) {
+    private void addMessageObject(Object value) {
         if (value == null)
             throw new ModuleException("value");
-        output.add(new Message(
-                MessageType.DATA,
-                new Date(),
-                createValue(value)
-        ));
+        if (value instanceof List) {
+            Date date = new Date();
+            ((List) value).forEach(v -> output.add(new Message(
+                    MessageType.DATA,
+                    date,
+                    createValue(v)
+            )));
+        } else {
+            output.add(new Message(
+                    MessageType.DATA,
+                    new Date(),
+                    createValue(value)
+            ));
+        }
     }
 
     @Override
-    public void addError(Object value) {
+    public void addMessage(String value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Byte value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Short value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Integer value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Long value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Float value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(Double value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(BigInteger value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(BigDecimal value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(byte[] value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(ObjectArray value) {
+        addMessageObject(value);
+    }
+
+    @Override
+    public void addMessage(List<Object> values) {
+        addMessageObject(values);
+    }
+
+    private void addErrorObject(Object value) {
         if (value == null)
             throw new ModuleException("value");
-        output.add(new Message(
-                MessageType.ERROR,
-                new Date(),
-                createValue(value)
-        ));
+        if (value instanceof List) {
+            Date date = new Date();
+            ((List) value).forEach(v -> output.add(new Message(
+                    MessageType.ERROR,
+                    date,
+                    createValue(v)
+            )));
+        } else {
+            output.add(new Message(
+                    MessageType.ERROR,
+                    new Date(),
+                    createValue(value)
+            ));
+        }
+    }
+
+    @Override
+    public void addError(String value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Byte value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Short value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Integer value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Long value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Float value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Double value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(BigInteger value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(BigDecimal value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(byte[] value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(ObjectArray value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(List<Object> values) {
+        addErrorObject(values);
     }
 
     public void add(MessageType messageType, Object value) {
         output.add(new Message(messageType, new Date(), new Value(value)));
+    }
+
+    @Override
+    public void addLog(String value) {
+        if (value == null)
+            throw new ModuleException("value");
+        output.add(new Message(
+                MessageType.LOG,
+                new Date(),
+                createValue(value)
+        ));
     }
 
     @Override
@@ -783,6 +932,11 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
     @Override
     public boolean isEnable() {
         return true;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     public List<Configuration> getManagedConfigurations() {

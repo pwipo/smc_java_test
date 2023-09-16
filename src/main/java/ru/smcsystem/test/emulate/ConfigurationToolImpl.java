@@ -1,14 +1,13 @@
 package ru.smcsystem.test.emulate;
 
-import ru.smcsystem.api.dto.IContainerManaged;
-import ru.smcsystem.api.dto.IExecutionContext;
-import ru.smcsystem.api.dto.IModule;
-import ru.smcsystem.api.dto.IValue;
+import ru.smcsystem.api.dto.*;
 import ru.smcsystem.api.exceptions.ModuleException;
 import ru.smcsystem.api.tools.ConfigurationTool;
 import ru.smcsystem.api.tools.FileTool;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
@@ -114,7 +113,67 @@ public class ConfigurationToolImpl implements ConfigurationTool {
     }
 
     @Override
-    public void setVariable(String key, Object value) {
+    public void setVariable(String key, String value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Byte value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Short value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Integer value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Long value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Float value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, Double value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, BigInteger value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, BigDecimal value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, byte[] value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
+    public void setVariable(String key, ObjectArray value) {
         configuration.setVariable(key, value);
         variablesChangeFlag.put(key, false);
     }
@@ -163,8 +222,18 @@ public class ConfigurationToolImpl implements ConfigurationTool {
     }
 
     @Override
+    public long getThreadBufferSize() {
+        return configuration.getThreadBufferSize();
+    }
+
+    @Override
     public boolean isEnable() {
         return configuration.isEnable();
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     @Override
@@ -177,4 +246,28 @@ public class ConfigurationToolImpl implements ConfigurationTool {
         return true;
     }
 
+    @Override
+    public void loggerTrace(String text) {
+        System.out.printf("Log Cfg %d: %s%n", 0, text);
+    }
+
+    @Override
+    public void loggerDebug(String text) {
+        System.out.printf("Log Cfg %d: %s%n", 0, text);
+    }
+
+    @Override
+    public void loggerInfo(String text) {
+        System.out.printf("Log Cfg %d: %s%n", 0, text);
+    }
+
+    @Override
+    public void loggerWarn(String text) {
+        System.out.printf("Log Cfg %d: %s%n", 0, text);
+    }
+
+    @Override
+    public void loggerError(String text) {
+        System.out.printf("Log Cfg %d: %s%n", 0, text);
+    }
 }

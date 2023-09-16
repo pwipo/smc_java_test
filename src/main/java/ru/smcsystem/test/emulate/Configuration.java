@@ -4,6 +4,8 @@ import ru.smcsystem.api.dto.*;
 import ru.smcsystem.api.enumeration.MessageType;
 import ru.smcsystem.api.exceptions.ModuleException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Configuration implements IConfigurationManaged {
@@ -16,6 +18,7 @@ public class Configuration implements IConfigurationManaged {
     private Map<String, IValue> variables;
     private List<IExecutionContextManaged> executionContexts;
     private Long bufferSize;
+    private Long threadBufferSize;
     private Boolean enable;
     private Container container;
 
@@ -29,6 +32,7 @@ public class Configuration implements IConfigurationManaged {
             , Map<String, IValue> variables
             , List<IExecutionContextManaged> executionContexts
             , Long bufferSize
+            , Long threadBufferSize
 
     ) {
         if (name == null || name.isBlank())
@@ -41,7 +45,8 @@ public class Configuration implements IConfigurationManaged {
         this.variables = variables != null ? new HashMap<>(variables) : new HashMap<>();
         this.executionContexts = executionContexts != null ? new ArrayList<>(executionContexts) : new ArrayList<>();
         this.executionContexts.forEach(ec -> ((ExecutionContext) ec).setConfiguration(this));
-        this.bufferSize = bufferSize != null ? bufferSize : 1;
+        this.bufferSize = bufferSize != null ? bufferSize : 0;
+        this.threadBufferSize = threadBufferSize != null ? threadBufferSize : 1;
         this.enable = true;
         setExecutionContextTool(executionContextTool);
         setContainer(container);
@@ -53,12 +58,26 @@ public class Configuration implements IConfigurationManaged {
             , IModule module
             , String name
             , String description
+            , Map<String, IValue> settings
+            , Map<String, IValue> variables
+            , List<IExecutionContextManaged> executionContexts
+            , Long bufferSize
     ) {
-        this(executionContextTool, container, module, name, description, null, null, null, null);
+        this(executionContextTool, container, module, name, description, settings, variables, executionContexts, bufferSize, null);
+    }
+
+    public Configuration(
+            ExecutionContextToolImpl executionContextTool
+            , Container container
+            , IModule module
+            , String name
+            , String description
+    ) {
+        this(executionContextTool, container, module, name, description, null, null, null, null, null);
     }
 
     public Configuration(Container container, IModule module, String name, String description) {
-        this(null, container, module, name, description, null, null, null, null);
+        this(null, container, module, name, description, null, null, null, null, null);
     }
 
     public void setExecutionContextTool(ExecutionContextToolImpl executionContextTool) {
@@ -90,8 +109,7 @@ public class Configuration implements IConfigurationManaged {
         executionContextTool.add(messageType, value);
     }
 
-    @Override
-    public void setSetting(String key, Object value) {
+    private void setSettingObject(String key, Object value) {
         if (value == null)
             throw new ModuleException("value");
 
@@ -105,7 +123,61 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
-    public void setVariable(String key, Object value) {
+    public void setSetting(String key, String value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Byte value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Short value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Integer value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Long value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Float value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, Double value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, BigInteger value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, BigDecimal value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, byte[] value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
+    public void setSetting(String key, ObjectArray value) {
+        setSettingObject(key, value);
+    }
+
+    private void setVariableObject(String key, Object value) {
         if (value == null)
             throw new ModuleException("value");
 
@@ -119,6 +191,61 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
+    public void setVariable(String key, String value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Byte value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Short value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Integer value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Long value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Float value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Double value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, BigInteger value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, BigDecimal value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, byte[] value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, ObjectArray value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
     public void removeVariable(String key) {
         Optional<IValue> variable = getVariable(key);
         variable.ifPresent(v -> getAllVariables().remove(key));
@@ -128,6 +255,17 @@ public class Configuration implements IConfigurationManaged {
     @Override
     public void setBufferSize(long bufferSize) {
         this.bufferSize = bufferSize;
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
+    }
+
+    @Override
+    public long getThreadBufferSize() {
+        return threadBufferSize;
+    }
+
+    @Override
+    public void setThreadBufferSize(long threadBufferSize) {
+        this.threadBufferSize = threadBufferSize;
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
     }
 
@@ -158,6 +296,15 @@ public class Configuration implements IConfigurationManaged {
         ExecutionContext executionContext = new ExecutionContext(executionContextTool, this, name, maxWorkInterval);
         executionContexts.add(executionContext);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_CREATE, String.format("%s.%s", getName(), executionContext.getName()));
+        return executionContext;
+    }
+
+    @Override
+    public IExecutionContextManaged updateExecutionContext(int id, String name, int maxWorkInterval) {
+        IExecutionContextManaged executionContext = executionContexts.get(id);
+        executionContext.setName(name);
+        executionContext.setMaxWorkInterval(maxWorkInterval);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_UPDATE, String.format("%s.%s", getName(), executionContext.getName()));
         return executionContext;
     }
 
@@ -216,6 +363,11 @@ public class Configuration implements IConfigurationManaged {
     @Override
     public boolean isEnable() {
         return enable;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     @Override

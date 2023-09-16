@@ -35,6 +35,8 @@ public class SourceFilter implements ISourceFilter {
                 return 2;
             case STRING_CONTAIN:
                 return 2;
+            case OBJECT_PATHS:
+                return 1;
             default:
                 throw new IllegalArgumentException();
         }

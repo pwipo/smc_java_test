@@ -1,8 +1,11 @@
 package ru.smcsystem.test.emulate;
 
 import ru.smcsystem.api.dto.IValue;
+import ru.smcsystem.api.dto.ObjectArray;
 import ru.smcsystem.api.enumeration.ValueType;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Objects;
 
 public class Value implements IValue {
@@ -33,6 +36,10 @@ public class Value implements IValue {
                 if (!(value instanceof Long))
                     throw new IllegalArgumentException();
                 break;
+            case BIG_INTEGER:
+                if (!(value instanceof BigInteger))
+                    throw new IllegalArgumentException();
+                break;
             case FLOAT:
                 if (!(value instanceof Float))
                     throw new IllegalArgumentException();
@@ -41,8 +48,16 @@ public class Value implements IValue {
                 if (!(value instanceof Double))
                     throw new IllegalArgumentException();
                 break;
+            case BIG_DECIMAL:
+                if (!(value instanceof BigDecimal))
+                    throw new IllegalArgumentException();
+                break;
             case BYTES:
                 if (!(value instanceof byte[]))
+                    throw new IllegalArgumentException();
+                break;
+            case OBJECT_ARRAY:
+                if (!(value instanceof ObjectArray))
                     throw new IllegalArgumentException();
                 break;
             default:
@@ -72,6 +87,8 @@ public class Value implements IValue {
             type = ValueType.DOUBLE;
         } else if (value instanceof byte[]) {
             type = ValueType.BYTES;
+        } else if (value instanceof ObjectArray) {
+            type = ValueType.OBJECT_ARRAY;
         } else {
             throw new IllegalArgumentException();
         }

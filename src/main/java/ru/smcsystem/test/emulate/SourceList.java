@@ -6,6 +6,8 @@ import ru.smcsystem.api.enumeration.SourceGetType;
 import ru.smcsystem.api.enumeration.SourceType;
 import ru.smcsystem.api.exceptions.ModuleException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,8 +66,7 @@ public class SourceList implements ISourceListManaged {
         return source;
     }
 
-    @Override
-    public ISourceManaged createSource(Object value) {
+    private ISourceManaged createSourceStatic(Object value) {
         Source source = new Source(executionContextTool, configurationName, executionContextName, new Value(value), countSource());
         sources.add(source);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_CREATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
@@ -73,10 +74,159 @@ public class SourceList implements ISourceListManaged {
     }
 
     @Override
+    public ISourceManaged createSource(String value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Byte value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Short value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Integer value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Long value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Float value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Double value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(BigInteger value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(BigDecimal value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(byte[] value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(ObjectArray value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
     public ISourceManaged createSource() {
         Source source = new Source(executionContextTool, configurationName, executionContextName, (List<ISourceManaged>) null, countSource());
         sources.add(source);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_CREATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
+        return source;
+    }
+
+    @Override
+    public ISourceManaged createSource(ObjectArray value, List<String> fields) {
+        Source source = new Source(executionContextTool, configurationName, executionContextName, new Value(value), (List<ISourceManaged>) null, countSource(), fields);
+        sources.add(source);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_CREATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
+        return source;
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, IConfiguration configuration, SourceGetType getType, int countLast, boolean eventDriven) {
+        Source source = new Source(executionContextTool, configurationName, executionContextName, configuration, eventDriven, countSource());
+        sources.set(id, source);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_UPDATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
+        return source;
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, IExecutionContext executionContext, SourceGetType getType, int countLast, boolean eventDriven) {
+        Source source = new Source(executionContextTool, configurationName, executionContextName, executionContext, eventDriven, countSource());
+        sources.set(id, source);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_UPDATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
+        return source;
+    }
+
+    private ISourceManaged updateSourceStatic(int id, Object value) {
+        Source source = new Source(executionContextTool, configurationName, executionContextName, new Value(value), countSource());
+        sources.set(id, source);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_UPDATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
+        return source;
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, String value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Byte value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Short value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Integer value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Long value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Float value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Double value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, BigInteger value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, BigDecimal value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, byte[] value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, ObjectArray value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, ObjectArray value, List<String> fields) {
+        Source source = new Source(executionContextTool, configurationName, executionContextName, new Value(value), (List<ISourceManaged>) null, countSource(), fields);
+        sources.set(id, source);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_SOURCE_CONTEXT_UPDATE, String.format("%s.%s.%d", configurationName, executionContextName, source.getOrder()));
         return source;
     }
 

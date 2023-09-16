@@ -5,6 +5,8 @@ import ru.smcsystem.api.enumeration.MessageType;
 import ru.smcsystem.api.enumeration.SourceGetType;
 import ru.smcsystem.api.exceptions.ModuleException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +96,14 @@ public class ExecutionContext implements IExecutionContextManaged {
     }
 
     @Override
+    public void updateExecutionContext(int id, IExecutionContext executionContext) {
+        if (id <= 0 || countExecutionContexts() <= id)
+            throw new ModuleException("id");
+        executionContexts.set(id, executionContext);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_UPDATE, String.format("%s.%s", configuration.getName(), getName()));
+    }
+
+    @Override
     public void removeExecutionContext(int id) {
         if (id <= 0 || countExecutionContexts() <= id)
             throw new ModuleException("id");
@@ -115,9 +125,17 @@ public class ExecutionContext implements IExecutionContextManaged {
 
     @Override
     public void insertManagedConfiguration(int id, IConfiguration configuration) {
-        if (id <= 0 || countManagedConfigurations() <= id)
+        if (id <= 0 || countManagedConfigurations() < id)
             throw new ModuleException("id");
         managedConfigurations.add(id, configuration);
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_UPDATE, String.format("%s.%s", configuration.getName(), getName()));
+    }
+
+    @Override
+    public void updateManagedConfiguration(int id, IConfiguration configuration) {
+        if (id <= 0 || countManagedConfigurations() <= id)
+            throw new ModuleException("id");
+        managedConfigurations.set(id, configuration);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_UPDATE, String.format("%s.%s", configuration.getName(), getName()));
     }
 
@@ -150,13 +168,138 @@ public class ExecutionContext implements IExecutionContextManaged {
     }
 
     @Override
-    public ISourceManaged createSource(Object value) {
+    public ISourceManaged createSource(String value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Byte value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Short value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Integer value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Long value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Float value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(Double value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(BigInteger value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(BigDecimal value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(byte[] value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
+    public ISourceManaged createSource(ObjectArray value) {
         return sourceList.createSource(value);
     }
 
     @Override
     public ISourceManaged createSource() {
         return sourceList.createSource();
+    }
+
+    @Override
+    public ISourceManaged createSource(ObjectArray value, List<String> fields) {
+        return sourceList.createSource(value, fields);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, IConfiguration configuration, SourceGetType getType, int countLast, boolean eventDriven) {
+        return sourceList.updateSource(id, configuration, getType, countLast, eventDriven);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, IExecutionContext executionContext, SourceGetType getType, int countLast, boolean eventDriven) {
+        return sourceList.updateSource(id, executionContext, getType, countLast, eventDriven);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, String value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Byte value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Short value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Integer value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Long value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Float value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Double value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, BigInteger value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, BigDecimal value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, byte[] value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, ObjectArray value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, ObjectArray value, List<String> fields) {
+        return sourceList.updateSource(id, value, fields);
     }
 
     /*
@@ -199,6 +342,11 @@ public class ExecutionContext implements IExecutionContextManaged {
     @Override
     public boolean isEnable() {
         return enable;
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     @Override

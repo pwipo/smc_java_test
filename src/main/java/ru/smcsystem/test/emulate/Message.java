@@ -49,4 +49,14 @@ public class Message implements IMessage {
     public Object getValue() {
         return value.getValue();
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Message{");
+        sb.append("type=").append(type);
+        sb.append(", date=").append(date);
+        sb.append(", value=").append(value);
+        sb.append('}');
+        return sb.toString();
+    }
 }

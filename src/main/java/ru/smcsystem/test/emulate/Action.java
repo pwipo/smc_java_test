@@ -35,4 +35,13 @@ public class Action implements IAction {
     public ActionType getType() {
         return type/*.name()*/;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Action{");
+        sb.append("messages=").append(messages);
+        sb.append(", type=").append(type);
+        sb.append('}');
+        return sb.toString();
+    }
 }
