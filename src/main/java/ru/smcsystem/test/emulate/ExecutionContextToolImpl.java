@@ -844,6 +844,11 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         executeInParalel.remove(threadId);
     }
 
+    @Override
+    public void releaseThreadCache(long threadId) {
+        executeInParalel.remove(threadId);
+    }
+
     /*
     // @Override
     private boolean isProcessReady(int managedId) {
