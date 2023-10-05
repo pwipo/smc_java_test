@@ -8,6 +8,7 @@ import ru.smcsystem.api.tools.FileTool;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
@@ -248,26 +249,26 @@ public class ConfigurationToolImpl implements ConfigurationTool {
 
     @Override
     public void loggerTrace(String text) {
-        System.out.printf("Log Cfg %d: %s%n", 0, text);
+        System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
 
     @Override
     public void loggerDebug(String text) {
-        System.out.printf("Log Cfg %d: %s%n", 0, text);
+        System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
 
     @Override
     public void loggerInfo(String text) {
-        System.out.printf("Log Cfg %d: %s%n", 0, text);
+        System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
 
     @Override
     public void loggerWarn(String text) {
-        System.out.printf("Log Cfg %d: %s%n", 0, text);
+        System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
 
     @Override
     public void loggerError(String text) {
-        System.out.printf("Log Cfg %d: %s%n", 0, text);
+        System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
 }
