@@ -218,6 +218,11 @@ public class ExecutionContext implements IExecutionContextManaged {
     }
 
     @Override
+    public ISourceManaged createSource(Boolean value) {
+        return sourceList.createSource(value);
+    }
+
+    @Override
     public ISourceManaged createSource(ObjectArray value) {
         return sourceList.createSource(value);
     }
@@ -289,6 +294,11 @@ public class ExecutionContext implements IExecutionContextManaged {
 
     @Override
     public ISourceManaged updateSource(int id, byte[] value) {
+        return sourceList.updateSource(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Boolean value) {
         return sourceList.updateSource(id, value);
     }
 

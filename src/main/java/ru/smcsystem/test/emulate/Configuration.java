@@ -173,6 +173,11 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
+    public void setSetting(String key, Boolean value) {
+        setSettingObject(key, value);
+    }
+
+    @Override
     public void setSetting(String key, ObjectArray value) {
         setSettingObject(key, value);
     }
@@ -237,6 +242,11 @@ public class Configuration implements IConfigurationManaged {
 
     @Override
     public void setVariable(String key, byte[] value) {
+        setVariableObject(key, value);
+    }
+
+    @Override
+    public void setVariable(String key, Boolean value) {
         setVariableObject(key, value);
     }
 

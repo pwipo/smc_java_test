@@ -153,6 +153,11 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
     }
 
     @Override
+    public void addMessage(Boolean value) {
+        addMessageObject(value);
+    }
+
+    @Override
     public void addMessage(ObjectArray value) {
         addMessageObject(value);
     }
@@ -228,6 +233,11 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
 
     @Override
     public void addError(byte[] value) {
+        addErrorObject(value);
+    }
+
+    @Override
+    public void addError(Boolean value) {
         addErrorObject(value);
     }
 

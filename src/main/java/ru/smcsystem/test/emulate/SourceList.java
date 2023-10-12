@@ -124,6 +124,11 @@ public class SourceList implements ISourceListManaged {
     }
 
     @Override
+    public ISourceManaged createSource(Boolean value) {
+        return createSourceStatic(value);
+    }
+
+    @Override
     public ISourceManaged createSource(ObjectArray value) {
         return createSourceStatic(value);
     }
@@ -214,6 +219,11 @@ public class SourceList implements ISourceListManaged {
 
     @Override
     public ISourceManaged updateSource(int id, byte[] value) {
+        return updateSourceStatic(id, value);
+    }
+
+    @Override
+    public ISourceManaged updateSource(int id, Boolean value) {
         return updateSourceStatic(id, value);
     }
 

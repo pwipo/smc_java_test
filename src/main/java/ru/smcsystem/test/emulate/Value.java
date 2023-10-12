@@ -56,6 +56,10 @@ public class Value implements IValue {
                 if (!(value instanceof byte[]))
                     throw new IllegalArgumentException();
                 break;
+            case BOOLEAN:
+                if (!(value instanceof Boolean))
+                    throw new IllegalArgumentException();
+                break;
             case OBJECT_ARRAY:
                 if (!(value instanceof ObjectArray))
                     throw new IllegalArgumentException();
@@ -87,6 +91,8 @@ public class Value implements IValue {
             type = ValueType.DOUBLE;
         } else if (value instanceof byte[]) {
             type = ValueType.BYTES;
+        } else if (value instanceof Boolean) {
+            type = ValueType.BOOLEAN;
         } else if (value instanceof ObjectArray) {
             type = ValueType.OBJECT_ARRAY;
         } else {

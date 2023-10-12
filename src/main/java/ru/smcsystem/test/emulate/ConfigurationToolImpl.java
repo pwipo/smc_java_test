@@ -174,6 +174,12 @@ public class ConfigurationToolImpl implements ConfigurationTool {
     }
 
     @Override
+    public void setVariable(String key, Boolean value) {
+        configuration.setVariable(key, value);
+        variablesChangeFlag.put(key, false);
+    }
+
+    @Override
     public void setVariable(String key, ObjectArray value) {
         configuration.setVariable(key, value);
         variablesChangeFlag.put(key, false);
@@ -240,11 +246,6 @@ public class ConfigurationToolImpl implements ConfigurationTool {
     @Override
     public IContainerManaged getContainer() {
         return configuration.getContainer();
-    }
-
-    @Override
-    public boolean hasLicense(int freeDays) {
-        return true;
     }
 
     @Override
