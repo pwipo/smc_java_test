@@ -302,17 +302,18 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
-    public IExecutionContextManaged createExecutionContext(String name, int maxWorkInterval) {
-        ExecutionContext executionContext = new ExecutionContext(executionContextTool, this, name, maxWorkInterval);
+    public IExecutionContextManaged createExecutionContext(String name, String type, int maxWorkInterval) {
+        ExecutionContext executionContext = new ExecutionContext(executionContextTool, this, name, type, maxWorkInterval);
         executionContexts.add(executionContext);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_CREATE, String.format("%s.%s", getName(), executionContext.getName()));
         return executionContext;
     }
 
     @Override
-    public IExecutionContextManaged updateExecutionContext(int id, String name, int maxWorkInterval) {
+    public IExecutionContextManaged updateExecutionContext(int id, String name, String type, int maxWorkInterval) {
         IExecutionContextManaged executionContext = executionContexts.get(id);
         executionContext.setName(name);
+        executionContext.setType(type);
         executionContext.setMaxWorkInterval(maxWorkInterval);
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_EXECUTION_CONTEXT_UPDATE, String.format("%s.%s", getName(), executionContext.getName()));
         return executionContext;

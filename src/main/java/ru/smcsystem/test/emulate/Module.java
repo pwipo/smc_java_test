@@ -69,4 +69,43 @@ public class Module implements IModule {
         return maxCountManagedConfigurations;
     }
 
+    @Override
+    public int countTypes() {
+        return 1;
+    }
+
+    @Override
+    public String getTypeName(int i) {
+        return "";
+    }
+
+    @Override
+    public int getMinCountSources(int i) {
+        return minCountSources;
+    }
+
+    @Override
+    public int getMaxCountSources(int i) {
+        return maxCountSources;
+    }
+
+    @Override
+    public int getMinCountExecutionContexts(int i) {
+        return minCountExecutionContexts;
+    }
+
+    @Override
+    public int getMaxCountExecutionContexts(int i) {
+        return maxCountExecutionContexts;
+    }
+
+    @Override
+    public int getMinCountManagedConfigurations(int i) {
+        return minCountManagedConfigurations;
+    }
+
+    @Override
+    public int getMaxCountManagedConfigurations(int i) {
+        return maxCountManagedConfigurations;
+    }
 }

@@ -277,7 +277,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         if (input != null) {
             for (int i = 0; i < input.size(); i++) {
                 sources.add(new Source(
-                        this, configuration.getName(), getName(), new ExecutionContext(String.valueOf(i), null), false, i));
+                        this, configuration.getName(), getName(), new ExecutionContext(String.valueOf(i), null, null), false, i));
             }
         }
         return new SourceList(this, configuration.getName(), getName(), sources).getSource(id);
@@ -961,6 +961,11 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
     @Override
     public Optional<IExecutionContext> getManagedExecutionContext(int id) {
         return Optional.empty();
+    }
+
+    @Override
+    public String getType() {
+        return "";
     }
 
 }

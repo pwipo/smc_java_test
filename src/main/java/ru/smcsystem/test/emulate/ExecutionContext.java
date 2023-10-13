@@ -21,6 +21,7 @@ public class ExecutionContext implements IExecutionContextManaged {
     private SourceList sourceList;
     private Integer maxWorkInterval;
     private Boolean enable;
+    private String type;
 
     public ExecutionContext(
             ExecutionContextToolImpl executionContextTool
@@ -30,6 +31,7 @@ public class ExecutionContext implements IExecutionContextManaged {
             , List<IConfiguration> managedConfigurations
             , List<ISourceManaged> sources
             , Integer maxWorkInterval
+            , String type
     ) {
         this.executionContextTool = executionContextTool;
         this.configuration = configuration;
@@ -39,14 +41,15 @@ public class ExecutionContext implements IExecutionContextManaged {
         this.sourceList = new SourceList(executionContextTool, configuration.getName(), name, sources != null ? new ArrayList<>(sources) : new ArrayList<>());
         this.maxWorkInterval = maxWorkInterval != null ? maxWorkInterval : -1;
         this.enable = true;
+        this.type = type != null ? type : "";
     }
 
-    public ExecutionContext(ExecutionContextToolImpl executionContextTool, Configuration configuration, String name, Integer maxWorkInterval) {
-        this(executionContextTool, configuration, name, null, null, null, maxWorkInterval);
+    public ExecutionContext(ExecutionContextToolImpl executionContextTool, Configuration configuration, String name, String type, Integer maxWorkInterval) {
+        this(executionContextTool, configuration, name, null, null, null, maxWorkInterval, type);
     }
 
-    public ExecutionContext(String name, Integer maxWorkInterval) {
-        this(null, null, name, null, null, null, maxWorkInterval);
+    public ExecutionContext(String name, String type, Integer maxWorkInterval) {
+        this(null, null, name, null, null, null, maxWorkInterval, type);
     }
 
     public void setExecutionContextTool(ExecutionContextToolImpl executionContextTool) {
@@ -362,5 +365,15 @@ public class ExecutionContext implements IExecutionContextManaged {
     @Override
     public Optional<ISourceListManaged> getSourceListManaged(int id) {
         return sourceList.getSourceListManaged(id);
+    }
+
+    @Override
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 }
