@@ -80,32 +80,18 @@ public class Module implements IModule {
     }
 
     @Override
-    public int getMinCountSources(int i) {
-        return minCountSources;
+    public int getCountSources(int i) {
+        return Math.min(minCountSources, maxCountSources);
     }
 
     @Override
-    public int getMaxCountSources(int i) {
-        return maxCountSources;
+    public int getCountExecutionContexts(int i) {
+        return Math.min(minCountExecutionContexts, maxCountExecutionContexts);
     }
 
     @Override
-    public int getMinCountExecutionContexts(int i) {
-        return minCountExecutionContexts;
+    public int getCountManagedConfigurations(int i) {
+        return Math.min(minCountManagedConfigurations, maxCountManagedConfigurations);
     }
 
-    @Override
-    public int getMaxCountExecutionContexts(int i) {
-        return maxCountExecutionContexts;
-    }
-
-    @Override
-    public int getMinCountManagedConfigurations(int i) {
-        return minCountManagedConfigurations;
-    }
-
-    @Override
-    public int getMaxCountManagedConfigurations(int i) {
-        return maxCountManagedConfigurations;
-    }
 }
