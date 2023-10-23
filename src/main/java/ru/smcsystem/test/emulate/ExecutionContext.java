@@ -41,7 +41,7 @@ public class ExecutionContext implements IExecutionContextManaged {
         this.sourceList = new SourceList(executionContextTool, configuration.getName(), name, sources != null ? new ArrayList<>(sources) : new ArrayList<>());
         this.maxWorkInterval = maxWorkInterval != null ? maxWorkInterval : -1;
         this.enable = true;
-        this.type = type != null ? type : "";
+        this.type = type != null ? type : "default";
     }
 
     public ExecutionContext(ExecutionContextToolImpl executionContextTool, Configuration configuration, String name, String type, Integer maxWorkInterval) {
