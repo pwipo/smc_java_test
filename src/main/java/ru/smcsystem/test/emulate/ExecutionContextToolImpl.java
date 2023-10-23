@@ -965,7 +965,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
 
     @Override
     public String getType() {
-        return "";
+        return "default";
     }
 
 }
