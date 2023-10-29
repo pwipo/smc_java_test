@@ -16,21 +16,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ExecutionContextToolImpl implements ExecutionContextTool, ConfigurationControlTool, FlowControlTool {
-
     private final List<List<IAction>> input;
-
     protected final List<IMessage> output;
-
     private final List<Configuration> managedConfigurations;
-
     private final List<IAction> executionContextsOutput;
     private final List<Function<List<Object>, IAction>> executionContexts;
     private final List<List<Integer>> executeInParalel;
-
     private final Thread currentTread;
-
     private final List<IModule> modules;
-
+    private final String name;
+    private final String type;
     private Configuration configuration;
 
     public ExecutionContextToolImpl(
@@ -38,6 +33,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
             , List<Configuration> managedConfigurations
             , List<IAction> executionContextsOutput
             , List<Function<List<Object>, IAction>> executionContexts
+            , String name, String type
     ) {
         this.input = input != null ? new ArrayList<>(input) : new ArrayList<>();
         this.output = new ArrayList<>();
@@ -48,6 +44,8 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         this.executionContexts = executionContexts;
         if (executionContexts != null)
             executionContexts.forEach(ec -> this.executionContextsOutput.add(null));
+        this.name = name;
+        this.type = type;
         this.executeInParalel = new LinkedList<>();
 
         currentTread = Thread.currentThread();
@@ -58,6 +56,15 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         this.managedConfigurations.forEach(c -> moduleMap.put(c.getModule().getName(), c.getModule()));
         if (!moduleMap.isEmpty())
             modules.addAll(moduleMap.values());
+    }
+
+    public ExecutionContextToolImpl(
+            List<List<IAction>> input
+            , List<Configuration> managedConfigurations
+            , List<IAction> executionContextsOutput
+            , List<Function<List<Object>, IAction>> executionContexts
+    ) {
+        this(input, managedConfigurations, executionContextsOutput, executionContexts, "default", "default");
     }
 
     public ExecutionContextToolImpl(List<List<IAction>> input, List<Configuration> managedConfigurations, List<IAction> executionContextsOutput) {
@@ -936,7 +943,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
 
     @Override
     public String getName() {
-        return "default";
+        return name;
     }
 
     @Override
@@ -965,7 +972,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
 
     @Override
     public String getType() {
-        return "default";
+        return type;
     }
 
 }
