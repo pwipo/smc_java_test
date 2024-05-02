@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ExecutionContext implements IExecutionContextManaged {
-
     private ExecutionContextToolImpl executionContextTool;
     private Configuration configuration;
     private String name;

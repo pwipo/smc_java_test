@@ -2,36 +2,40 @@ package ru.smcsystem.test.emulate;
 
 import ru.smcsystem.api.dto.IModule;
 
+import java.util.List;
+
 public class Module implements IModule {
+    private String name;
 
-    private final String name;
-    private final int minCountSources;
-    private final int maxCountSources;
-    private final int minCountExecutionContexts;
-    private final int maxCountExecutionContexts;
-    private final int minCountManagedConfigurations;
-    private final int maxCountManagedConfigurations;
+    public static class ModuleType {
+        public String name;
+        public int minCountSources;
+        public int maxCountSources;
+        public int minCountExecutionContexts;
+        public int maxCountExecutionContexts;
+        public int minCountManagedConfigurations;
+        public int maxCountManagedConfigurations;
 
-    public Module(
-            String name
-            , int minCountSources
-            , int maxCountSources
-            , int minCountExecutionContexts
-            , int maxCountExecutionContexts
-            , int minCountManagedConfigurations
-            , int maxCountManagedConfigurations
-    ) {
+        public ModuleType(String name, int minCountSources, int maxCountSources, int minCountExecutionContexts, int maxCountExecutionContexts, int minCountManagedConfigurations, int maxCountManagedConfigurations) {
+            this.name = name;
+            this.minCountSources = minCountSources;
+            this.maxCountSources = maxCountSources;
+            this.minCountExecutionContexts = minCountExecutionContexts;
+            this.maxCountExecutionContexts = maxCountExecutionContexts;
+            this.minCountManagedConfigurations = minCountManagedConfigurations;
+            this.maxCountManagedConfigurations = maxCountManagedConfigurations;
+        }
+    }
+
+    private List<ModuleType> types;
+
+    public Module(String name, List<ModuleType> types) {
         this.name = name;
-        this.minCountSources = minCountSources;
-        this.maxCountSources = maxCountSources;
-        this.minCountExecutionContexts = minCountExecutionContexts;
-        this.maxCountExecutionContexts = maxCountExecutionContexts;
-        this.minCountManagedConfigurations = minCountManagedConfigurations;
-        this.maxCountManagedConfigurations = maxCountManagedConfigurations;
+        this.types = types;
     }
 
     public Module(String name) {
-        this(name, -1, -1, -1, -1, -1, -1);
+        this(name, List.of(new ModuleType("default", 0, -1, 0, -1, 0, -1)));
     }
 
     @Override
@@ -39,59 +43,55 @@ public class Module implements IModule {
         return name;
     }
 
-    @Override
-    public int getMinCountSources() {
-        return minCountSources;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public int getMaxCountSources() {
-        return maxCountSources;
+    public List<ModuleType> getTypes() {
+        return types;
     }
 
-    @Override
-    public int getMinCountExecutionContexts() {
-        return minCountExecutionContexts;
-    }
-
-    @Override
-    public int getMaxCountExecutionContexts() {
-        return maxCountExecutionContexts;
-    }
-
-    @Override
-    public int getMinCountManagedConfigurations() {
-        return minCountManagedConfigurations;
-    }
-
-    @Override
-    public int getMaxCountManagedConfigurations() {
-        return maxCountManagedConfigurations;
+    public void setTypes(List<ModuleType> types) {
+        this.types = types;
     }
 
     @Override
     public int countTypes() {
-        return 1;
+        return types.size();
     }
 
     @Override
     public String getTypeName(int i) {
-        return "";
+        return types.get(i).name;
     }
 
     @Override
-    public int getCountSources(int i) {
-        return Math.min(minCountSources, maxCountSources);
+    public int getMinCountSources(int i) {
+        return types.get(i).minCountSources;
     }
 
     @Override
-    public int getCountExecutionContexts(int i) {
-        return Math.min(minCountExecutionContexts, maxCountExecutionContexts);
+    public int getMaxCountSources(int i) {
+        return types.get(i).maxCountSources;
     }
 
     @Override
-    public int getCountManagedConfigurations(int i) {
-        return Math.min(minCountManagedConfigurations, maxCountManagedConfigurations);
+    public int getMinCountExecutionContexts(int i) {
+        return types.get(i).minCountExecutionContexts;
     }
 
+    @Override
+    public int getMaxCountExecutionContexts(int i) {
+        return types.get(i).maxCountExecutionContexts;
+    }
+
+    @Override
+    public int getMinCountManagedConfigurations(int i) {
+        return types.get(i).minCountManagedConfigurations;
+    }
+
+    @Override
+    public int getMaxCountManagedConfigurations(int i) {
+        return types.get(i).maxCountManagedConfigurations;
+    }
 }
