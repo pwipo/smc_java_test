@@ -285,10 +285,10 @@ public class SourceList implements ISourceListManaged {
         List<ISourceManaged> sources = getSources();
         if (id < 0 || sources.size() <= id)
             return Optional.empty();
-        ISource contextSource = sources.get(id);
+        ISourceManaged contextSource = sources.get(id);
         if (contextSource.getType() != SourceType.MULTIPART)
             return Optional.empty();
-        return Optional.of(new SourceList(executionContextTool, configurationName, executionContextName, new ArrayList<>(sources)));
+        return Optional.of(new SourceList(executionContextTool, configurationName, executionContextName, List.of(contextSource)));
     }
 
     @Override
