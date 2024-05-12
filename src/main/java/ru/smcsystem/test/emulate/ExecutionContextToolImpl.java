@@ -923,7 +923,7 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
             throw new ModuleException("id");
         Configuration configuration = managedConfigurations.remove(id);
         configuration.setContainer(null);
-        add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_CREATE, configuration.getName());
+        add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_REMOVE, configuration.getName());
     }
 
     @Override
