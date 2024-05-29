@@ -26,6 +26,10 @@ public class Action implements IAction {
         this.type = type;
     }
 
+    public Action(List<IMessage> messages) {
+        this(messages, ActionType.EXECUTE);
+    }
+
     @Override
     public List<IMessage> getMessages() {
         return messages;

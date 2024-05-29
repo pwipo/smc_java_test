@@ -30,6 +30,10 @@ public class Message implements IMessage {
         this.value = value;
     }
 
+    public Message(IValue value) {
+        this(MessageType.DATA, new Date(), value);
+    }
+
     @Override
     public Date getDate() {
         return date;

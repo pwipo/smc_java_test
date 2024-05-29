@@ -18,6 +18,10 @@ public class Command implements ICommand {
         this.type = type;
     }
 
+    public Command(List<IAction> actions) {
+        this(actions, CommandType.EXECUTE);
+    }
+
     @Override
     public List<IAction> getActions() {
         return actions;
