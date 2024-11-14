@@ -272,4 +272,10 @@ public class ConfigurationToolImpl implements ConfigurationTool {
     public void loggerError(String text) {
         System.out.printf("%s: Log Cfg %d: %s%n", Instant.now(), 0, text);
     }
+
+    @Override
+    public Optional<IValue> getInfo(String s) {
+        return Optional.empty();
+    }
+
 }
