@@ -106,4 +106,14 @@ public class Container implements IContainerManaged {
     public boolean isEnable() {
         return enable;
     }
+
+    @Override
+    public Optional<IConfigurationManaged> getConfigurationManaged(int id) {
+        return configurations.size() > id && id >= 0 ? Optional.of((IConfigurationManaged) configurations.get(id)) : Optional.empty();
+    }
+
+    @Override
+    public Optional<IContainerManaged> getContainerManaged(int id) {
+        return containers.size() > id && id >= 0 ? Optional.of((IContainerManaged) containers.get(id)) : Optional.empty();
+    }
 }
