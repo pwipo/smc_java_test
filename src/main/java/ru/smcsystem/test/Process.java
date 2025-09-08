@@ -61,6 +61,7 @@ public class Process {
             module.start(configurationTool);
         } catch (Exception e) {
             result.add(new Message(MessageType.ACTION_ERROR, new Date(), new Value(ValueType.STRING, "error " + e.getMessage())));
+            e.printStackTrace();
         }
 
         result.add(new Message(MessageType.ACTION_STOP, new Date(), new Value(ValueType.INTEGER, 1)));
@@ -115,6 +116,7 @@ public class Process {
             executionContextTool.getOutput().addAll(0, output);
         } catch (Exception e) {
             result.add(new Message(MessageType.ACTION_ERROR, new Date(), new Value(ValueType.STRING, "error " + e.getMessage())));
+            e.printStackTrace();
         }
 
         result.add(new Message(MessageType.ACTION_STOP, new Date(), new Value(ValueType.INTEGER, 1)));
@@ -174,6 +176,7 @@ public class Process {
             module.update(configurationTool);
         } catch (Exception e) {
             result.add(new Message(MessageType.ACTION_ERROR, new Date(), new Value(ValueType.STRING, "error " + e.getMessage())));
+            e.printStackTrace();
         }
 
         result.add(new Message(MessageType.ACTION_STOP, new Date(), new Value(ValueType.INTEGER, 1)));
@@ -221,6 +224,7 @@ public class Process {
             module.stop(configurationTool);
         } catch (Exception e) {
             result.add(new Message(MessageType.ACTION_ERROR, new Date(), new Value(ValueType.STRING, "error " + e.getMessage())));
+            e.printStackTrace();
         }
 
         result.add(new Message(MessageType.ACTION_STOP, new Date(), new Value(ValueType.INTEGER, 1)));
