@@ -9,7 +9,6 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Configuration implements IConfigurationManaged {
-
     private ExecutionContextToolImpl executionContextTool;
     private IModule module;
     private String name;
@@ -21,6 +20,8 @@ public class Configuration implements IConfigurationManaged {
     private Long threadBufferSize;
     private Boolean enable;
     private Container container;
+    private String workingDirectory;
+    private ObjectElement shape;
 
     public Configuration(
             ExecutionContextToolImpl executionContextTool
@@ -50,6 +51,8 @@ public class Configuration implements IConfigurationManaged {
         this.enable = true;
         setExecutionContextTool(executionContextTool);
         setContainer(container);
+        workingDirectory = "";
+        shape = new ObjectElement();
     }
 
     public Configuration(
@@ -87,20 +90,6 @@ public class Configuration implements IConfigurationManaged {
         });
         if (this.container != null)
             container.setExecutionContextTool(executionContextTool);
-    }
-
-    public void setContainer(Container container) {
-        if (this.container != null)
-            this.container.configurations.remove(this);
-        this.container = container;
-        if (this.container != null)
-            this.container.configurations.add(this);
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
     }
 
     private void addMessage(MessageType messageType, Object value) {
@@ -263,12 +252,6 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
-    public void setBufferSize(long bufferSize) {
-        this.bufferSize = bufferSize;
-        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
-    }
-
-    @Override
     public long getThreadBufferSize() {
         return threadBufferSize;
     }
@@ -276,12 +259,6 @@ public class Configuration implements IConfigurationManaged {
     @Override
     public void setThreadBufferSize(long threadBufferSize) {
         this.threadBufferSize = threadBufferSize;
-        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
-    }
-
-    @Override
-    public void setEnable(boolean enable) {
-        this.enable = enable;
         executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
     }
 
@@ -338,6 +315,12 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
+    public void setName(String name) {
+        this.name = name;
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
+    }
+
+    @Override
     public String getDescription() {
         return description;
     }
@@ -372,8 +355,20 @@ public class Configuration implements IConfigurationManaged {
     }
 
     @Override
+    public void setBufferSize(long bufferSize) {
+        this.bufferSize = bufferSize;
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
+    }
+
+    @Override
     public boolean isEnable() {
         return enable;
+    }
+
+    @Override
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+        executionContextTool.add(MessageType.CONFIGURATION_CONTROL_CONFIGURATION_UPDATE, getName());
     }
 
     @Override
@@ -385,4 +380,36 @@ public class Configuration implements IConfigurationManaged {
     public IContainerManaged getContainer() {
         return container;
     }
+
+    public void setContainer(Container container) {
+        if (this.container != null)
+            this.container.configurations.remove(this);
+        this.container = container;
+        if (this.container != null)
+            this.container.configurations.add(this);
+    }
+
+    @Override
+    public String getWorkDirectory() {
+        return workingDirectory;
+    }
+
+    public void setWorkingDirectory(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+    }
+
+    @Override
+    public IContainer getContainerSimple() {
+        return container;
+    }
+
+    @Override
+    public ObjectElement getShape() {
+        return shape;
+    }
+
+    public void setShape(ObjectElement shape) {
+        this.shape = shape;
+    }
+
 }

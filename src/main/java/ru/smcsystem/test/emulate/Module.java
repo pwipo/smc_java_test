@@ -1,11 +1,13 @@
 package ru.smcsystem.test.emulate;
 
 import ru.smcsystem.api.dto.IModule;
+import ru.smcsystem.api.dto.ObjectElement;
 
 import java.util.List;
 
 public class Module implements IModule {
     private String name;
+    private ObjectElement info;
 
     public static class ModuleType {
         public String name;
@@ -32,6 +34,7 @@ public class Module implements IModule {
     public Module(String name, List<ModuleType> types) {
         this.name = name;
         this.types = types;
+        info = new ObjectElement();
     }
 
     public Module(String name) {
@@ -93,5 +96,14 @@ public class Module implements IModule {
     @Override
     public int getMaxCountManagedConfigurations(int i) {
         return types.get(i).maxCountManagedConfigurations;
+    }
+
+    @Override
+    public ObjectElement getInfo() {
+        return null;
+    }
+
+    public void setInfo(ObjectElement info) {
+        this.info = info;
     }
 }

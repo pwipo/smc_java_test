@@ -16,14 +16,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ConfigurationToolImpl implements ConfigurationTool {
-
     private final Configuration configuration;
-
     private final FileToolImpl homeFolder;
-
     private final Map<String, Boolean> variablesChangeFlag;
-
     private final String workDirectory;
+    private IValue info;
 
     public ConfigurationToolImpl(Configuration configuration, String homeFolder, String workDirectory) {
         if (configuration == null)
@@ -41,6 +38,7 @@ public class ConfigurationToolImpl implements ConfigurationTool {
         if (workDirectory == null)
             workDirectory = System.getProperty("java.io.tmpdir");
         this.workDirectory = workDirectory;
+        info = null;
     }
 
     public ConfigurationToolImpl(String name, String description, Map<String, IValue> settings, String homeFolder, String workDirectory) {
@@ -275,7 +273,20 @@ public class ConfigurationToolImpl implements ConfigurationTool {
 
     @Override
     public Optional<IValue> getInfo(String s) {
-        return Optional.empty();
+        return Optional.ofNullable(info);
     }
 
+    public void setInfo(IValue info) {
+        this.info = info;
+    }
+
+    @Override
+    public IContainer getContainerSimple() {
+        return configuration.getContainerSimple();
+    }
+
+    @Override
+    public ObjectElement getShape() {
+        return configuration.getShape();
+    }
 }

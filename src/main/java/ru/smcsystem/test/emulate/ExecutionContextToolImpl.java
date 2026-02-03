@@ -975,4 +975,43 @@ public class ExecutionContextToolImpl implements ExecutionContextTool, Configura
         return type;
     }
 
+    @Override
+    public Long getThreadId() {
+        return 0L;
+    }
+
+    @Override
+    public String getNickName() {
+        return "";
+    }
+
+    @Override
+    public void executeNowDirect(CommandType type, IExecutionContextManaged managedEC, List<Object> values) {
+
+    }
+
+    @Override
+    public long executeParallelDirect(CommandType type, List<IExecutionContextManaged> managedECs, List<Object> values, Integer waitingTacts, Integer maxWorkInterval) {
+        return 0;
+    }
+
+    @Override
+    public List<IAction> getMessagesFromExecutedDirect(IExecutionContextManaged managedEC) {
+        return List.of();
+    }
+
+    @Override
+    public List<IAction> getMessagesFromExecutedDirect(long threadId, IExecutionContextManaged managedEC) {
+        return List.of();
+    }
+
+    @Override
+    public List<ICommand> getCommandsFromExecutedDirect(IExecutionContextManaged managedEC) {
+        return List.of();
+    }
+
+    @Override
+    public List<ICommand> getCommandsFromExecutedDirect(long threadId, IExecutionContextManaged managedEC) {
+        return List.of();
+    }
 }

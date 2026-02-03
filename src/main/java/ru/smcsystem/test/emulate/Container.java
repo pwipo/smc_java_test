@@ -1,16 +1,15 @@
 package ru.smcsystem.test.emulate;
 
-import ru.smcsystem.api.dto.IConfiguration;
-import ru.smcsystem.api.dto.IConfigurationManaged;
-import ru.smcsystem.api.dto.IContainer;
-import ru.smcsystem.api.dto.IContainerManaged;
+import ru.smcsystem.api.dto.*;
 import ru.smcsystem.api.enumeration.MessageType;
+import ru.smcsystem.api.enumeration.ObjectType;
 import ru.smcsystem.api.exceptions.ModuleException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Container implements IContainerManaged {
 
@@ -19,6 +18,8 @@ public class Container implements IContainerManaged {
     private Boolean enable;
     public List<IContainer> containers;
     public List<IConfiguration> configurations;
+    private String smclText;
+    private ObjectArray shapes;
 
     public Container(ExecutionContextToolImpl executionContextTool, String name, List<IContainer> containers, List<IConfiguration> configurations) {
         this.name = name;
@@ -26,6 +27,8 @@ public class Container implements IContainerManaged {
         this.containers = containers != null ? new ArrayList<>(containers) : new ArrayList<>();
         this.configurations = configurations != null ? new ArrayList<>(configurations) : new ArrayList<>();
         setExecutionContextTool(executionContextTool);
+        smclText = "";
+        shapes = new ObjectArray();
     }
 
     public void setExecutionContextTool(ExecutionContextToolImpl executionContextTool) {
@@ -116,4 +119,40 @@ public class Container implements IContainerManaged {
     public Optional<IContainerManaged> getContainerManaged(int id) {
         return containers.size() > id && id >= 0 ? Optional.of((IContainerManaged) containers.get(id)) : Optional.empty();
     }
+
+    @Override
+    public String getSmcl() {
+        return smclText;
+    }
+
+    @Override
+    public boolean saveSmcl(String text) {
+        smclText = text;
+        return true;
+    }
+
+    @Override
+    public ObjectArray getShapes() {
+        return shapes;
+    }
+
+    @Override
+    public ObjectArray getDecorationShapes() {
+        if (shapes.size() == 0)
+            return shapes;
+        return new ObjectArray(
+                Stream.iterate(0, i -> i + 1)
+                        .limit(shapes.size())
+                        .map(n -> (ObjectElement) shapes.get(n))
+                        .filter(e -> e.findField("type")
+                                .map(f -> f.getValue().toString())
+                                .filter(s -> !s.equals("application") && !s.equals("container") && !s.equals("configuration"))
+                                .isPresent())
+                        .collect(Collectors.toList()), ObjectType.OBJECT_ELEMENT);
+    }
+
+    public void setShapes(ObjectArray shapes) {
+        this.shapes = shapes;
+    }
+
 }
